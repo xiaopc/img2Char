@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h1 contenteditable class="title-inline">字符画生成器</h1>
+    <span><embed src="https://img.shields.io/github/stars/xiaopc/img2Char.svg?style=social&label=Star&maxAge=2592000" alt="Github: xiaopc/img2Char"></span>
 
     <breadcrumb :settings="panels" @change="handleTabChange"></breadcrumb>
 
