@@ -17,7 +17,7 @@
       <button type="button" @click="doPic" style="flex: 1;margin: 0 6%;">查看截图</button>
     </div>
     <div class="asc-result" v-if="isHTML" :style="style">
-      <span v-html="result" ref="resultHTML"></span>
+      <span v-html="result" ref="resultHTML" style="min-width: max-content; min-height: max-content; display:block"></span>
     </div>
     <div class="asc-result-pic" v-else>
       <img :src="imgUrl" style="width: 100%; height: 100%;">
