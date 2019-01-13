@@ -13,11 +13,13 @@
           <input type="text" v-model="style.lineHeight">
         </div>
       </div>
-      <button type="button" @click="doCopy" style="flex: 1;margin: 0 6%;">复制文本</button>
-      <button type="button" @click="doPic" style="flex: 1;margin: 0 6%;">查看截图</button>
+      <button type="button" @click="openPicker" style="flex: 1;margin: 0 2%;">背景色</button>
+      <sketch-picker id="color-picker" v-if="colorpicker" :value="style.background" @input="handleBgChange"/>
+      <button type="button" @click="doCopy" style="flex: 1;margin: 0 2%;">复制文本</button>
+      <button type="button" @click="doPic" style="flex: 1;margin: 0 2%;">查看截图</button>
     </div>
-    <div class="asc-result" v-if="isHTML" :style="style">
-      <span v-html="result" ref="resultHTML" style="min-width: max-content; min-height: max-content; display:block"></span>
+    <div class="asc-result" v-if="isHTML">
+      <span v-html="result" ref="resultHTML" :style="style" style="min-width: max-content; min-height: max-content; display:block"></span>
     </div>
     <div class="asc-result-pic" v-else>
       <img :src="imgUrl" style="width: 100%; height: 100%;">
@@ -30,9 +32,13 @@ import { staticImageBuffer } from '../modules/imageBuffer'
 import { createPairsFunc, imageToGrayScaleText } from '../modules/grayScale'
 import { pickCharsFunc, imageToRgbHTML } from '../modules/rgb'
 import { copyToClip } from '../modules/copyClipboard'
+import { Sketch } from 'vue-color'
 
 export default {
   name: 'Result',
+  components: {
+    'sketch-picker': Sketch,
+  },
   props: {
     settings: Object
   },
@@ -41,9 +47,11 @@ export default {
       result: "请先完成前两步",
       imgUrl: null,
       isHTML: true,
+      colorpicker: false,
       style: {
         fontSize: '12px',
         lineHeight: '1.5',
+        background: '#fff',
       },
     }
   },
@@ -59,6 +67,12 @@ export default {
         this.imgUrl = await this.$html2canvas(el, {type: 'dataURL'})
       }
       this.isHTML = !this.isHTML
+    },
+    openPicker: function(e) {
+      this.colorpicker = !this.colorpicker
+    },
+    handleBgChange: function (e) {
+      this.style.background = 'rgba(' + e.rgba.r + ', ' + e.rgba.g + ', ' + e.rgba.b + ',' + e.rgba.a + ')'
     }
   },
   mounted: function() {
@@ -109,6 +123,12 @@ export default {
   max-width: 100pt;
 }
 
+#color-picker {
+  left: 42%;
+  position: absolute;
+  top: 203px;
+}
+
 .control-group {
   padding: 0;
 }
@@ -135,6 +155,11 @@ export default {
 @media (max-width: 750px) {
   .control-inline {
     display: grid;
+  }
+
+  #color-picker {
+    left: 20%;
+    top: 260px;
   }
 }
 </style>

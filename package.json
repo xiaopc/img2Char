@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "vue": "^2.5.17",
+    "vue-color": "^2.7.0",
     "vue-html2canvas": "0.0.4",
     "vue-picture-input": "^2.1.6"
   },

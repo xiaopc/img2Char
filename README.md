@@ -3,6 +3,10 @@
 ## Reference
 [kainstar/image-to-text](https://github.com/kainstar/image-to-text)
 
+## Known issues
+
+capturing works incorrectly on Firefox.
+
 ## Project setup
 ```
 npm install
