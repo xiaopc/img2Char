@@ -1,10 +1,14 @@
 import { FONT_HEIGHT, FONT_WIDTH } from './constants'
 
-function rgb2Hex(r, g, b) {
+function rgba2Hex(r, g, b, a, br, bg, bb) {
   let hex = "#" 
-  hex += ("0" + Number(r).toString(16)).slice(-2)
-  hex += ("0" + Number(g).toString(16)).slice(-2)
-  hex += ("0" + Number(b).toString(16)).slice(-2)
+  const alpha = a / 255
+  const rr = Math.floor(r * alpha + br * (1 - alpha))
+  const rg = Math.floor(g * alpha + bg * (1 - alpha))
+  const rb = Math.floor(b * alpha + bb * (1 - alpha))
+  hex += ("0" + Number(rr).toString(16)).slice(-2)
+  hex += ("0" + Number(rg).toString(16)).slice(-2)
+  hex += ("0" + Number(rb).toString(16)).slice(-2)
   return hex;
 }
 
@@ -29,8 +33,8 @@ export function imageToRgbHTML(imageData, charWidth, textGen) {
     let line = ''
     for (let w = 0; w < width; w += FONT_WIDTH * charWidth) {
       const i = (w + width * h) * 4
-      let hex = rgb2Hex(dataArr[i], dataArr[i + 1], dataArr[i + 2])
-      line += ('<span style="color:' + ((dataArr[i + 3] == 0) ? "#FFFFFF" : hex) + '">' + textGen() + '</span>')
+      let hex = rgba2Hex(dataArr[i], dataArr[i + 1], dataArr[i + 2], dataArr[i + 3], 255, 255, 255)
+      line += ('<span style="color:' + hex + '">' + textGen() + '</span>')
     }
     lines.push(line)
   }

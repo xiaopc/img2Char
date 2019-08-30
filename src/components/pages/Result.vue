@@ -68,7 +68,7 @@ export default {
       }
       this.isHTML = !this.isHTML
     },
-    openPicker: function(e) {
+    openPicker: function() {
       this.colorpicker = !this.colorpicker
     },
     handleBgChange: function (e) {
